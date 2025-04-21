@@ -171,7 +171,7 @@ public class BookController : Controller
         {
             await connection.OpenAsync();
             // Fixed the SQL command by adding "SELECT"
-            using (var command = new OracleCommand("SELECT SHTILMAN.BOOKS_SEQ.NEXTVAL FROM DUAL", connection))
+            using (var command = new OracleCommand("SELECT PERSTIN.BOOKS_SEQ.NEXTVAL FROM DUAL", connection))
             {
                 nextBookId = Convert.ToInt32(await command.ExecuteScalarAsync());
             }

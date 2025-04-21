@@ -57,7 +57,7 @@ public class ReviewController : Controller
         using (var connection = new OracleConnection(_context.Database.GetConnectionString()))
         {
             await connection.OpenAsync();
-            using (var command = new OracleCommand("SELECT SHTILMAN.REVIEWS_SEQ.NEXTVAL FROM DUAL", connection))
+            using (var command = new OracleCommand("SELECT PERSTIN.REVIEWS_SEQ.NEXTVAL FROM DUAL", connection))
             {
                 nextReviewId = Convert.ToInt32(await command.ExecuteScalarAsync());
             }

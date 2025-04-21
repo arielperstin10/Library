@@ -214,6 +214,24 @@ public class UserController : Controller
 
     public async Task<IActionResult> Login(string Email, string Password)
     {
+        // SQL Injection:
+        string query = $"SELECT * FROM Users WHERE Email = '{Email}' AND Password = '{Password}'";
+        var users = await _context.Users
+            .FromSqlRaw(query)
+            .ToListAsync();
+
+        var user = users.FirstOrDefault();
+
+        if (user == null)
+        {
+            ViewBag.Message = "No matching user found";
+            return View("Login");
+        }
+
+        HttpContext.Session.SetString("Username", user.Username);
+        return RedirectToAction("Index", "Home");
+        
+        /*
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == Email);
 
         if (user == null || !VerifyPassword(Password, user.Password))
@@ -226,6 +244,7 @@ public class UserController : Controller
         HttpContext.Session.SetString("Username", user.Username);
 
         return RedirectToAction("Index", "Home");
+        */
     }
 
     public IActionResult Logout()

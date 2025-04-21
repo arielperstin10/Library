@@ -16,8 +16,8 @@ public class User
     [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])[A-Za-z\d!@#\$%\^&\*]{8,}$", 
         ErrorMessage = "Password must contain at least one uppercase letter, one number, one special character (!,@,#, etc.), and lowercase letters.")]
     public string Password { get; set; }
-    [Required(ErrorMessage = "Invalid email address.")] 
-    [RegularExpression(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", ErrorMessage = "Invalid email address.")]
+    //[Required(ErrorMessage = "Invalid email address.")] 
+    //[RegularExpression(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", ErrorMessage = "Invalid email address.")]
     public string Email { get; set; }
     [Required]
     [StringLength(20, ErrorMessage = "First name must be up to 20 characters long.")]
@@ -33,5 +33,13 @@ public class User
     public UserRole Role { get; set; }
     public int MaxBorrowed { get; set; }
     public int IsPasswordChanged { get; set; }
+    
+    public int id { get; set; }
+    
+    public string cardNumber { get; set; }
+    
+    public DateTime validDate { get; set; }
+    
+    public string cvc { get; set; }
     
 }
