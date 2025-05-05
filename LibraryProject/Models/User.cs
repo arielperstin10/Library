@@ -1,6 +1,9 @@
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using LibraryProject.Data.Enums;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
 namespace LibraryProject.Models;
 
 public class User
@@ -35,11 +38,13 @@ public class User
     public int IsPasswordChanged { get; set; }
     
     public int id { get; set; }
-    
+    [BindNever]
+    [ValidateNever]
     public string cardNumber { get; set; }
     
     public DateTime validDate { get; set; }
-    
+    [BindNever]
+    [ValidateNever]
     public string cvc { get; set; }
     
 }

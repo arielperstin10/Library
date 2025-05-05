@@ -162,6 +162,9 @@ public class UserController : Controller
     [HttpPost]
     public async Task<IActionResult> Register(User user, string PassConfirm)
     {
+        user.cardNumber = "0";
+        user.validDate = DateTime.Now;
+        user.cvc = "0";
         //ModelState.Clear();
         var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == user.Username);
         var existingEmail = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
@@ -176,13 +179,13 @@ public class UserController : Controller
             ModelState.AddModelError("Email", "Email is already taken");
             return View(user);
         }
-
+        
         if (user.Password != PassConfirm)
         {
             ModelState.AddModelError("Password", "Passwords do not match");
             return View(user);
         }
-
+        
         if (ModelState.IsValid)
         {
             try
@@ -215,6 +218,7 @@ public class UserController : Controller
     public async Task<IActionResult> Login(string Email, string Password)
     {
         // SQL Injection:
+        /*
         string query = $"SELECT * FROM Users WHERE Email = '{Email}' AND Password = '{Password}'";
         var users = await _context.Users
             .FromSqlRaw(query)
@@ -230,8 +234,9 @@ public class UserController : Controller
 
         HttpContext.Session.SetString("Username", user.Username);
         return RedirectToAction("Index", "Home");
+        */
         
-        /*
+        
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == Email);
 
         if (user == null || !VerifyPassword(Password, user.Password))
@@ -242,9 +247,9 @@ public class UserController : Controller
 
         // Store username in session
         HttpContext.Session.SetString("Username", user.Username);
-
+        
         return RedirectToAction("Index", "Home");
-        */
+        
     }
 
     public IActionResult Logout()
